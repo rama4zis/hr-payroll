@@ -46,7 +46,7 @@ export const HR_MENU = [
     items: [
       {
         title: "Employees",
-        url: "#",
+        url: "/hr/employees",
         icon: Users,
       },
       {

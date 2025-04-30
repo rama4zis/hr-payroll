@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -16,6 +17,15 @@ import {
 import Image from "next/image";
 
 import { HR_MENU } from "@/config/menu";
+import { NavUser } from "@/components/nav-user";
+
+const data = {
+  user: {
+    name: "Raja Iblis",
+    email: "m@example.com",
+    avatar: "/avatars/shaddn.jpg",
+  },
+};
 
 export function AppSidebar() {
   return (
@@ -51,6 +61,9 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
     </Sidebar>
   );
 }
