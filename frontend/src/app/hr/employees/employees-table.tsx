@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Search } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export type Employee = {
   id: string;
   name: string;
@@ -149,6 +151,23 @@ export default function EmployeesTable({ status }: { status?: string }) {
     {
       accessorKey: "name",
       header: "Name",
+      cell: ({ row }) => {
+        const employee = row.original;
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar>
+              <AvatarImage src={employee.avatarUrl || "/placeholder.svg"} />
+              <AvatarFallback>
+                {employee.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
+            <div className="font-medium">{employee.name}</div>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "email",
@@ -165,6 +184,22 @@ export default function EmployeesTable({ status }: { status?: string }) {
     {
       accessorKey: "status",
       header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status") as string;
+        return (
+          <Badge
+            variant={
+              status === "active"
+                ? "default"
+                : status === "onboarding"
+                  ? "outline"
+                  : "destructive"
+            }
+          >
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </Badge>
+        );
+      },
     },
     {
       accessorKey: "joinDate",
@@ -227,7 +262,7 @@ export default function EmployeesTable({ status }: { status?: string }) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
